@@ -10,14 +10,17 @@ import java.util.concurrent.Future;
 
 public class GSPService extends UnicastRemoteObject implements GSPInterface{
     private HashMap<Integer,HashSet<Integer>> graph;
+    private HashMap<Integer, Integer> nodesSet;
 
-    protected GSPService(HashMap<Integer,HashSet<Integer>> graph) throws RemoteException {
+    protected GSPService(HashMap<Integer,HashSet<Integer>> graph, HashMap<Integer, Integer> nodesSet) throws RemoteException {
         super();
         this.graph = graph;
+        this.nodesSet = nodesSet;
     }
 
     @Override
     public synchronized List<Integer> readRequest(List<String> batchRequest, String clientId) throws RemoteException, InterruptedException {
+        System.out.println("Processing Client:  " + clientId);
         ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         List<Future<Integer>> futures = new ArrayList<>();
         List<Integer> results = new ArrayList<>();
@@ -25,7 +28,7 @@ public class GSPService extends UnicastRemoteObject implements GSPInterface{
         for(String request : batchRequest){
             String[] requestParts = request.split(" ");
             if(requestParts[0].equals("Q")){
-                Future<Integer> future = executor.submit(new GSPWorker(graph, request));
+                Future<Integer> future = executor.submit(new GSPWorker(graph, nodesSet, request));
                 futures.add(future);
             }
             else{
@@ -40,7 +43,7 @@ public class GSPService extends UnicastRemoteObject implements GSPInterface{
                     }
                     futures.clear();
                 }
-                GSPWorker gspWorker = new GSPWorker(graph, request);
+                GSPWorker gspWorker = new GSPWorker(graph, nodesSet, request);
                 gspWorker.call();
             }
         }
@@ -55,6 +58,7 @@ public class GSPService extends UnicastRemoteObject implements GSPInterface{
             }
             futures.clear();
         }
+        System.out.println("End of Processing Client:  " + clientId);
 
         return results;
     }
