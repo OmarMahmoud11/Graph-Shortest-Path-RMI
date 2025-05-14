@@ -23,12 +23,14 @@ public class GSPStart {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         Properties config = new Properties();
-        config.load(new FileInputStream("/home/omar-mahmoud/DistributedSystems/project/Graph-Shortest-Path-RMI/src/main/resources/system.properties"));
+        config.load(new FileInputStream("src/main/resources/system.properties"));
 
         String host = config.getProperty("GSP.server");
         int rmiPort = Integer.parseInt(config.getProperty("GSP.rmiregistry.port"));
         String serviceName = config.getProperty("GSP.service.name");
         String graphInput = config.getProperty("GSP.graph");
+        int numThreads = Integer.parseInt(config.getProperty("GSP.threads.number"));
+
 
         LocateRegistry.createRegistry(rmiPort);
 //            Registry registry = LocateRegistry.getRegistry(rmiPort);
@@ -36,9 +38,11 @@ public class GSPStart {
         HashMap<Integer, HashSet<Integer>> graph = graphLoader.readGraphFromFile(graphInput);
         HashMap<Integer, Integer> nodesSet = getNodesSet(graph);
 
-        GSPService server = new GSPService(graph, nodesSet);
+        GSPService server = new GSPService(graph, nodesSet, numThreads);
+        GSPServiceSequential serverSequential = new GSPServiceSequential(graph, nodesSet);
         System.out.println(serviceName);
         Naming.rebind(serviceName, server);
+        Naming.rebind("sequential", serverSequential);
 
         System.out.println("GSP Server started on " + host + ":" + rmiPort);
     }

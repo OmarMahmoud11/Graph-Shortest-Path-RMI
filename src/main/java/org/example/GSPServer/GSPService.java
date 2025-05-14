@@ -11,17 +11,19 @@ import java.util.concurrent.Future;
 public class GSPService extends UnicastRemoteObject implements GSPInterface{
     private HashMap<Integer,HashSet<Integer>> graph;
     private HashMap<Integer, Integer> nodesSet;
+    private int numThreads;
 
-    protected GSPService(HashMap<Integer,HashSet<Integer>> graph, HashMap<Integer, Integer> nodesSet) throws RemoteException {
+    protected GSPService(HashMap<Integer,HashSet<Integer>> graph, HashMap<Integer, Integer> nodesSet, int numThreads) throws RemoteException {
         super();
         this.graph = graph;
         this.nodesSet = nodesSet;
+        this.numThreads = numThreads;
     }
 
     @Override
     public synchronized List<Integer> readRequest(List<String> batchRequest, String clientId) throws RemoteException, InterruptedException {
         System.out.println("Processing Client:  " + clientId);
-        ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        ExecutorService executor = Executors.newFixedThreadPool(numThreads);
         List<Future<Integer>> futures = new ArrayList<>();
         List<Integer> results = new ArrayList<>();
 
