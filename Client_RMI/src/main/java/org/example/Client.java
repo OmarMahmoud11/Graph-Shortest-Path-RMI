@@ -1,4 +1,4 @@
-package org.example.GSPClient;
+package org.example;
 
 import org.example.GSPServer.GSPInterface;
 
@@ -6,8 +6,8 @@ import java.io.FileInputStream;
 import java.rmi.Naming;
 import java.util.*;
 
-public class GSPStart {
-    static String[] operations = {"Q"};
+public class Client {
+    static String[] operations = {"Q","A","D"};
     static Random rand = new Random();
 
     static class Result{
@@ -22,10 +22,10 @@ public class GSPStart {
         }
     }
 
-    public static List<String> generateRequests(int numRequests, int maxNodeId) {
+    public static List<String> generateRequests(int batchSize, int maxNodeId) {
         List<String> requests = new ArrayList<>();
 
-        for (int i = 0; i < numRequests; i++) {
+        for (int i = 0; i < batchSize; i++) {
             String op = operations[rand.nextInt(operations.length)];
             int start = rand.nextInt(maxNodeId) + 1;
             int end = rand.nextInt(maxNodeId) + 1;
@@ -50,7 +50,7 @@ public class GSPStart {
 
 
             int numThreads = 1;
-            int batchSize = 10000;
+            int batchSize = 10;
             int maxNodeId = 20000;
             List<String> batch = generateRequests(batchSize, maxNodeId);
 
@@ -66,6 +66,7 @@ public class GSPStart {
                 Thread t = new Thread(() -> {
                     try {
                         Result r = new Result(finalI, batch, server.readRequest(batch, String.valueOf(finalI)));
+                        results.add(r);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -111,19 +112,20 @@ public class GSPStart {
 
             double duration2 = (endTime2 - startTime2) / 1_000_000.0; // Total time in nanoseconds
             System.out.println("Execution time Unparallel: " + duration2 + " ms");
-            //print 10 results
-            for(int i = 0; i < 10; i++){
-                System.out.println("client ID:  " + results.get(i).clientID);
-                System.out.println("batch:      " + results.get(i).reqs);
-                System.out.println("result:     "+ results.get(i).res);
+            if (!results.isEmpty()) {
+                for (int i = 0; i < Math.min(10, results.size()); i++) {
+                    System.out.println("client ID:  " + results.get(i).clientID);
+                    System.out.println("batch:      " + results.get(i).reqs);
+                    System.out.println("result:     " + results.get(i).res);
+                }
+            } else {
+                System.out.println("No results were collected.");
             }
-
 //            for(Result res: results){
 //                System.out.println("client ID:  " + res.clientID);
 //                System.out.println("batch:      " + res.reqs);
 //                System.out.println("result:     "+ res.res);
 //            }
-
 
 
         } catch (Exception e) {

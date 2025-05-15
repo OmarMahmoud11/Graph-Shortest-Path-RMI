@@ -13,7 +13,7 @@ public class GSPService extends UnicastRemoteObject implements GSPInterface{
     private HashMap<Integer, Integer> nodesSet;
     private int numThreads;
 
-    protected GSPService(HashMap<Integer,HashSet<Integer>> graph, HashMap<Integer, Integer> nodesSet, int numThreads) throws RemoteException {
+    public GSPService(HashMap<Integer,HashSet<Integer>> graph, HashMap<Integer, Integer> nodesSet, int numThreads) throws RemoteException {
         super();
         this.graph = graph;
         this.nodesSet = nodesSet;

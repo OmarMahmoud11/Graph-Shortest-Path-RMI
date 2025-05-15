@@ -8,7 +8,7 @@ public class GSPServiceSequential extends UnicastRemoteObject implements GSPInte
     private HashMap<Integer,HashSet<Integer>> graph;
     private HashMap<Integer, Integer> nodesSet;
 
-    protected GSPServiceSequential(HashMap<Integer,HashSet<Integer>> graph, HashMap<Integer, Integer> nodesSet) throws RemoteException {
+    public GSPServiceSequential(HashMap<Integer,HashSet<Integer>> graph, HashMap<Integer, Integer> nodesSet) throws RemoteException {
         super();
         this.graph = graph;
         this.nodesSet = nodesSet;

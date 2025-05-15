@@ -14,6 +14,36 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+  <build>
+    <plugins>
+      <!-- To allow running with 'mvn exec:java' -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <mainClass>org.example.GSPClient.Client</mainClass>
+        </configuration>
+    </plugin>
+
+    <!-- To create runnable jar with a Main-Class -->
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-jar-plugin</artifactId>
+      <version>3.2.2</version>
+      <configuration>
+        <archive>
+          <manifest>
+            <mainClass>org.example.Client</mainClass>
+          </manifest>
+        </archive>
+      </configuration>
+    </plugin>
+  </plugins>
+</build>
+
+
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>

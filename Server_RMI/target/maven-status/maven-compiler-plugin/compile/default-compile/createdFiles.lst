@@ -1,8 +1,8 @@
+org\example\GSPClient\GSPStart.class
 org\example\GSPServer\GSPService.class
-org\example\GSPServer\RandomGraphGenerator.class
 org\example\GSPServer\GraphLoader.class
 org\example\Main.class
-org\example\GSPServer\GSPStart.class
 org\example\GSPServer\GSPWorker.class
 org\example\GSPServer\GSPInterface.class
+org\example\GSPClient\GSPStart$Result.class
 org\example\GSPServer\GSPServiceSequential.class

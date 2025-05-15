@@ -1,5 +1,3 @@
-package org.example.GSPServer;
-
 import java.io.*;
 import java.util.*;
 
@@ -23,7 +21,7 @@ public class RandomGraphGenerator {
             edgeSet.add(edge);
         }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("/home/omar-mahmoud/DistributedSystems/project/Graph-Shortest-Path-RMI/input_graph.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("./input_graph.txt"))) {
             for (String edge : edgeSet) {
                 writer.write(edge);
                 writer.newLine();
