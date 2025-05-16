@@ -1,4 +1,4 @@
-package org.example.GSPClient;
+package org.example.GSPServer;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -20,7 +20,7 @@ public class RequestLogWriter {
             double durationMillis
     ) {
         // Define the folder name
-        String folderName = "Clog-" + clientId;
+        String folderName = "Slog-" + clientId;
         File logDir = new File(folderName);
 
         // Auto-create folder if it doesn't exist

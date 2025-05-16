@@ -14,23 +14,29 @@ public class ClientStarter {
 
     public static void main(String[] args) {
         try {
+            if (args.length < 3) {
+                System.out.println("Usage: java -jar target/Client_RMI-1.0-SNAPSHOT.jar <numReq> <batchSize> <maxNodeID> <clientId>");
+                return;
+            }
+            int numReq = Integer.parseInt(args[0]);
+            int batchSize = Integer.parseInt(args[1]);
+            int maxNodeId = Integer.parseInt(args[2]);
+            String clientId = args[3];
+            int waitTime = 10000; // in milliseconds
+            System.out.println("numReq: " + numReq);
+            System.out.println("batchSize: " + batchSize);
+            System.out.println("maxNodeId: " + maxNodeId);
+            System.out.println("clientId: " + clientId);
+
             GSPInterface server = (GSPInterface) Naming.lookup("update");
             System.out.println("Parallel service: " + server);
 
             String[] operations = {"Q", "A", "D"};
             Random rand = new Random();
             BatchHandler batchHandler = new BatchHandler(operations);
-            int numReq = rand.nextInt(100) + 1; // Random number of requests between 1 and 100
-            int batchSize = rand.nextInt(100) + 1; // Random batch size between 1 and 10
-            int maxNodeId = 20000;
-            int waitTime = 10000; // in milliseconds
             List<List<String>> batches = batchHandler.generateBatches(numReq, batchSize, maxNodeId);
-
-            //genrate random ID
-            String randomId = UUID.randomUUID().toString();
-            System.out.println("Random ID: " + randomId);
             List<Result> results = new ArrayList<>();
-            String clientId = randomId;
+            
 
             List<Double> ParallelTimes = new ArrayList<>();
             // Create a batch of requests

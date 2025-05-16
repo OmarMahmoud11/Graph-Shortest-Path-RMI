@@ -3,6 +3,7 @@ org\example\GSPServer\GSPService.class
 org\example\GSPServer\GraphLoader.class
 org\example\Main.class
 org\example\GSPServer\GSPWorker.class
+org\example\GSPServer\RequestLogWriter.class
 org\example\GSPServer\GSPInterface.class
 org\example\GSPClient\GSPStart$Result.class
 org\example\GSPServer\GSPServiceSequential.class
