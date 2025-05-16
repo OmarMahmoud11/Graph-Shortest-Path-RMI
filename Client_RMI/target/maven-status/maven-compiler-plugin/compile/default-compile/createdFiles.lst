@@ -1,3 +1,5 @@
+org\example\ClientStarter.class
 org\example\GSPServer\GSPInterface.class
-org\example\Client$Result.class
-org\example\Client.class
+org\example\GSPClient\BatchHandler.class
+org\example\GSPClient\RequestLogWriter.class
+org\example\GSPClient\Result.class

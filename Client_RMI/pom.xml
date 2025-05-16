@@ -16,15 +16,6 @@
 
   <build>
     <plugins>
-      <!-- To allow running with 'mvn exec:java' -->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>3.1.0</version>
-        <configuration>
-          <mainClass>org.example.GSPClient.Client</mainClass>
-        </configuration>
-    </plugin>
 
     <!-- To create runnable jar with a Main-Class -->
     <plugin>
@@ -34,7 +25,7 @@
       <configuration>
         <archive>
           <manifest>
-            <mainClass>org.example.Client</mainClass>
+            <mainClass>org.example.ClientStarter</mainClass>
           </manifest>
         </archive>
       </configuration>

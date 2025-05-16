@@ -84,6 +84,9 @@ public class GSPWorker implements Callable<Integer> {
     @Override
     public Integer call(){
         String[] requestParts = request.split(" ");
+        if(requestParts.length != 3){
+            return -1;
+        }
         int nodeA = Integer.parseInt(requestParts[1]);
         int nodeB = Integer.parseInt(requestParts[2]);
 

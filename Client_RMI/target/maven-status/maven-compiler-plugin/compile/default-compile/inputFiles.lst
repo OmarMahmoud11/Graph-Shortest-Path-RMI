@@ -1,2 +1,5 @@
-E:\college\level-4\2nd-term\Distributed Systems\Project\Repo\Graph-Shortest-Path-RMI\Client_RMI\src\main\java\org\example\Client.java
+E:\college\level-4\2nd-term\Distributed Systems\Project\Repo\Graph-Shortest-Path-RMI\Client_RMI\src\main\java\org\example\ClientStarter.java
+E:\college\level-4\2nd-term\Distributed Systems\Project\Repo\Graph-Shortest-Path-RMI\Client_RMI\src\main\java\org\example\GSPClient\BatchHandler.java
+E:\college\level-4\2nd-term\Distributed Systems\Project\Repo\Graph-Shortest-Path-RMI\Client_RMI\src\main\java\org\example\GSPClient\RequestLogWriter.java
+E:\college\level-4\2nd-term\Distributed Systems\Project\Repo\Graph-Shortest-Path-RMI\Client_RMI\src\main\java\org\example\GSPClient\Result.java
 E:\college\level-4\2nd-term\Distributed Systems\Project\Repo\Graph-Shortest-Path-RMI\Client_RMI\src\main\java\org\example\GSPServer\GSPInterface.java
