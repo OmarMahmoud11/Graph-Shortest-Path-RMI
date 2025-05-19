@@ -15,18 +15,27 @@ public class ClientStarter {
     public static void main(String[] args) {
         try {
             if (args.length < 3) {
-                System.out.println("Usage: java -jar target/Client_RMI-1.0-SNAPSHOT.jar <numReq> <batchSize> <maxNodeID> <clientId>");
+                System.out.println("Usage: java -jar target/Client_RMI-2.0-SNAPSHOT.jar <numReq> <batchSize> <maxNodeID> <clientId>");
+                return;
+            }else if (args.length > 5) {
+                System.out.println("Usage: java -jar target/Client_RMI-2.0-SNAPSHOT.jar <numReq> <batchSize> <maxNodeID> <clientId> <addAndDeleteRatio>");
                 return;
             }
             int numReq = Integer.parseInt(args[0]);
             int batchSize = Integer.parseInt(args[1]);
             int maxNodeId = Integer.parseInt(args[2]);
+            double addAndDeleteRatio = 0.5; // default value
             String clientId = args[3];
             int waitTime = 10000; // in milliseconds
             System.out.println("numReq: " + numReq);
             System.out.println("batchSize: " + batchSize);
             System.out.println("maxNodeId: " + maxNodeId);
             System.out.println("clientId: " + clientId);
+            if (args.length == 5) {
+                System.out.println("addAndDeleteRatio: " + args[4]);
+                addAndDeleteRatio = Double.parseDouble(args[4]);
+                System.out.println("addAndDeleteRatio: " + addAndDeleteRatio);
+            }
 
             GSPInterface server = (GSPInterface) Naming.lookup("update");
             System.out.println("Parallel service: " + server);
@@ -34,12 +43,21 @@ public class ClientStarter {
             String[] operations = {"Q", "A", "D"};
             Random rand = new Random();
             BatchHandler batchHandler = new BatchHandler(operations);
-            List<List<String>> batches = batchHandler.generateBatches(numReq, batchSize, maxNodeId);
+            if (addAndDeleteRatio < 0 || addAndDeleteRatio > 1) {
+                System.out.println("Invalid addAndDeleteRatio. It should be between 0 and 1.");
+                return;
+            }
+            // Generate batches of requests
+            List<List<String>> batches;
+            if(args.length == 5) {
+                batches = batchHandler.generateBatches(numReq, batchSize, maxNodeId, addAndDeleteRatio);
+            } else {
+                batches = batchHandler.generateBatches(numReq, batchSize, maxNodeId);
+            }
             List<Result> results = new ArrayList<>();
-            
-
             List<Double> ParallelTimes = new ArrayList<>();
             // Create a batch of requests
+
             for (List<String> batch : batches) {
                 long startTime = System.nanoTime();  // Start time in nanoseconds
                 Thread t = new Thread(() -> {
