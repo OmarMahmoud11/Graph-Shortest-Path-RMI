@@ -1,13 +1,20 @@
 Server jar:
 	java -jar target/Server_RMI-1.0-SNAPSHOT.jar <pathToGraph>
-	java -jar target/Server_RMI-1.0-SNAPSHOT.jar "E:\college\level-4\2nd-term\Distributed Systems\Project\Repo\Graph-Shortest-Path-RMI\Utility\input_graph.txt"
+	java -jar target/Server_RMI-1.0-SNAPSHOT.jar "F:\NewProjects\Graph-Shortest-Path-RMI\Utility\input_graph.txt"
 	
 Client jar:
 	java -jar Client_RMI-1.0-SNAPSHOT.jar <numReq> <batchSize> <maxNodeID> <clientId>
 	java -jar Client_RMI-1.0-SNAPSHOT.jar 50 10 20000 0
-	
+
+	Add and Delete Ratio
+	java -jar target/Client_RMI-2.0-SNAPSHOT.jar <numReq> <batchSize> <maxNodeID> <clientId> <addAndDeleteRatio>
+	java -jar target/Client_RMI-2.0-SNAPSHOT.jar 20 1000 20000 1 0.9
+
 .ps1: 
 	.\run_clients.ps1 -numReq 50 -batchSize 10 -maxNodeID 20000 -numClients 5
+
+  Ratio:
+	.\run_clients_AandD_ratio.ps1 -numReq 20 -batchSize 1000 -maxNodeID 20000 -numClients 1 -addAndDelRatio 0.8
 	
 .sh:
 	chmod +x run_clients.sh
